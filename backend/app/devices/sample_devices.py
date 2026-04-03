@@ -1,0 +1,23 @@
+SAMPLE_DEVICES = [
+    {
+        "id": "device_bedroom_light",
+        "canonical_name": "bedroom light",
+        "aliases": ["my room light", "room light"],
+        "room": "bedroom",
+        "type": "light",
+    },
+    {
+        "id": "device_bed_lamp",
+        "canonical_name": "bed lamp",
+        "aliases": ["bedside lamp"],
+        "room": "bedroom",
+        "type": "light",
+    },
+    {
+        "id": "camera_front_door",
+        "canonical_name": "front door cam",
+        "aliases": ["front door camera", "door camera"],
+        "room": "entry",
+        "type": "camera",
+    },
+]
