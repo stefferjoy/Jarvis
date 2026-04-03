@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "jarvis-backend"
 version = "0.1.0"
@@ -8,6 +12,11 @@ dependencies = [
   "uvicorn[standard]>=0.30.0",
   "pydantic>=2.7.0"
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["data*", "tests*"]
 
 [tool.uv]
 dev-dependencies = []

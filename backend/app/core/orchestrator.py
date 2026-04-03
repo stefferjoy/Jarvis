@@ -1,17 +1,27 @@
 from app.adapters.camera import show_camera
 from app.adapters.home import control_home_device
 from app.adapters.shortcuts import run_shortcut
-from app.config import DEVICES_FILE, MEMORY_FILE
+from app.config import (
+    DEVICES_FILE,
+    GEMINI_API_KEY,
+    MEMORY_FILE,
+    SHORTCUTS_BRIDGE_TIMEOUT_SECONDS,
+    SHORTCUTS_BRIDGE_TOKEN,
+    SHORTCUTS_BRIDGE_URL,
+)
 from app.devices.registry import DeviceRegistry
 from app.devices.understanding import DeviceUnderstanding
+from app.llm.gemini_client import GeminiClient
 from app.memory.store import MemoryStore
 
 
 class JarvisOrchestrator:
-    def __init__(self) -> None:
+    def __init__(self, llm_client: GeminiClient | None = None) -> None:
         self.memory = MemoryStore(MEMORY_FILE)
         self.devices = DeviceRegistry(DEVICES_FILE)
         self.device_understanding = DeviceUnderstanding(self.devices)
+        self.llm_client = llm_client or GeminiClient(api_key=GEMINI_API_KEY)
+        
 
     def handle_message(self, message: str) -> str:
         message = message.strip()
@@ -42,7 +52,17 @@ class JarvisOrchestrator:
         if any(token in normalized for token in ["turn on", "switch on", "turn off", "switch off"]):
             return self._handle_home_control(message)
 
-        return f"Jarvis MVP reply: I received '{message}'."
+        llm_reply = self.llm_client.generate_reply(message)
+        if llm_reply:
+            return llm_reply
+
+        if not self.llm_client.enabled:
+            return (
+                "Jarvis fallback: Gemini is not configured. "
+                "Set GEMINI_API_KEY to enable conversational replies."
+            )
+
+        return "Jarvis fallback: Gemini is currently unavailable. Please try again shortly."
 
     def _handle_shortcut(self, message: str) -> str:
         normalized = message.lower()
