@@ -1,0 +1,8 @@
+# macOS local artifacts
+.DS_Store
+
+# Flutter local build/tooling artifacts
+frontend/.dart_tool/
+
+# Keep app lockfile tracked for reproducible Flutter app dependencies
+# frontend/pubspec.lock
