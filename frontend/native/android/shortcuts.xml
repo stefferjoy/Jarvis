@@ -1,0 +1,15 @@
+<!-- Placeholder shortcuts scaffold. Integrate into Android project resources later. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+  <shortcut
+      android:shortcutId="run_morning_routine"
+      android:enabled="true"
+      android:icon="@mipmap/ic_launcher"
+      android:shortcutShortLabel="Morning Routine"
+      android:shortcutLongLabel="Run Morning Routine" />
+  <shortcut
+      android:shortcutId="run_bedtime_routine"
+      android:enabled="true"
+      android:icon="@mipmap/ic_launcher"
+      android:shortcutShortLabel="Bedtime Routine"
+      android:shortcutLongLabel="Run Bedtime Routine" />
+</shortcuts>
